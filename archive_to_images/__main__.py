@@ -7,7 +7,6 @@ import typer
 from rich.console import Console
 
 from archive_to_images import version
-from archive_to_images.example import hello
 
 
 class Color(str, Enum):
@@ -57,9 +56,6 @@ def main(
     """Print a greeting with a giving name."""
     if color is None:
         color = choice(list(Color))
-
-    greeting: str = hello(name)
-    console.print(f"[bold {color}]{greeting}[/]")
 
 
 if __name__ == "__main__":
