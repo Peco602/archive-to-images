@@ -111,3 +111,16 @@ build-remove:
 
 .PHONY: cleanup
 cleanup: pycache-remove dsstore-remove mypycache-remove ipynbcheckpoints-remove pytestcache-remove
+
+#* Buildi
+.PHONY: build
+build:
+	poetry build
+
+#* Publish
+# export POETRY_PYPI_TOKEN_PYPI=my-token
+# export POETRY_HTTP_BASIC_PYPI_USERNAME=<username>
+# export POETRY_HTTP_BASIC_PYPI_PASSWORD=<password>
+.PHONY: publish
+publish: build
+	poetry publish
