@@ -33,8 +33,9 @@ class Transformer(Processor):
         """
         Initializes the transformer before a conversion.
         """
+        logging.info(f"Transformer initialization")
         super()._initialize()
-        self._image_index = 0
+        self._chunk_index = 0
         self._archive_file = NamedTemporaryFile().name
 
     def _collect_input_files(self) -> None:
@@ -59,11 +60,13 @@ class Transformer(Processor):
         """
         Splits the archive in multiple chunks and transforms them into images
         """
+        logging.info(f"Archive transformation")
         with open(self._archive_file, mode="rb") as f:
             chunk = f.read(self._chunk_size)
             while chunk:
+                logging.debug(f"Processing chunk {self._chunk_index}")
                 _ = self._transform_chunk(chunk)
-                self._image_index = self._image_index + 1
+                self._chunk_index = self._chunk_index + 1
                 chunk = f.read(self._chunk_size)
 
     def _transform_chunk(self, chunk_data: bytes) -> str:
@@ -82,13 +85,13 @@ class Transformer(Processor):
 
         metadata: PngInfo = PngInfo()
         metadata.add_text(self._NAME_TAG, self._label)
-        metadata.add_text(self._INDEX_TAG, str(self._image_index))
+        metadata.add_text(self._INDEX_TAG, str(self._chunk_index))
         metadata.add_text(self._PADDING_TAG, str(padding))
 
         image_name: str = self._label + os.sep + str(uuid.uuid1()) + ".png"
         os.makedirs(os.path.dirname(image_name), exist_ok=True)
         image.save(image_name, pnginfo=metadata)
-        logging.info(f"Created image {image_name}")
+        logging.info(f"Created chunk image {image_name}")
 
         return image_name
 
@@ -139,6 +142,7 @@ class Transformer(Processor):
         """
         Performs the conversion from archive to images
         """
+        logging.info("Started transformer processing")
         self._initialize()
         self._collect_input_files()
         self._create_archive()

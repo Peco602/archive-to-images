@@ -8,37 +8,40 @@ from archive_to_images.transformer import Transformer
 
 def test_create_file(fs):
     """
-    Creation of the fake file system environment
+    Fake filesystem environment creation
     """
-    test_folder = "test"
-    fs.create_dir(test_folder)
+    folder = "test_folder"
+    file_prefix = "test_file"
+    fs.create_dir(folder)
     for i in range(0, 10):
-        fs.create_file(f"{test_folder}/test{i}.txt", contents=f"This is element {i}")
+        file_path = f"{folder}/{file_prefix}_{i}.txt"
+        fs.create_file(file_path, contents=f"This is element {i}")
 
     """
     Trasforming archive into images
     """
-    Transformer([test_folder], "collection", 1024).process()
-    assert Path("collection").exists()
+    collection = "test_collection"
+    Transformer([folder], collection, 1024).process()
+    assert Path(collection).exists()
 
     """
     Recovering archive from images
     """
-    Recover(["collection"]).process()
+    Recover([collection]).process()
 
     """
     Extracting archive
     """
-    tmp_folder = "tmp"
-    with zipfile.ZipFile("collection.zip", "r") as zip_ref:
-        zip_ref.extractall(tmp_folder)
+    extract_folder = "tmp"
+    with zipfile.ZipFile(f"{collection}.zip", "r") as file:
+        file.extractall(extract_folder)
 
     """
     Data verification
     """
     for i in range(0, 10):
         hashlib.sha512(
-            open(f"/{test_folder}/test{i}.txt", "rb").read()
+            open(f"{folder}/{file_prefix}_{i}.txt", "rb").read()
         ).hexdigest() == hashlib.sha512(
-            open(f"/{tmp_folder}/{test_folder}/test{i}.txt", "rb").read()
+            open(f"{extract_folder}/{folder}/{file_prefix}_{i}.txt", "rb").read()
         ).hexdigest()

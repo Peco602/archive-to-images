@@ -24,7 +24,7 @@ def test_initialize():
         files=["."], collection_name="test_collection", image_size=1024
     )
     transformer._initialize()
-    assert transformer._image_index == 0
+    assert transformer._chunk_index == 0
     assert len(transformer._file_set) == 0
     assert transformer._archive_file
 

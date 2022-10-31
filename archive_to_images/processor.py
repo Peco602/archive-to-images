@@ -25,7 +25,6 @@ class Processor:
         """
         Initializes the processor before a conversion.
         """
-        logging.info("Initialization")
         self._file_set = set()
 
     def _collect_input_files(self) -> None:
@@ -39,7 +38,7 @@ class Processor:
                 for path, _, directory_files in os.walk(input_file):
                     for file in directory_files:
                         self._file_set.add(os.path.join(path, file))
-                        logging.info(f"Adding file {file}")
+                        logging.debug(f"Adding file {file}")
             else:
                 self._file_set.add(input_file)
-                logging.info(f"Adding file {input_file}")
+                logging.debug(f"Adding file {input_file}")
