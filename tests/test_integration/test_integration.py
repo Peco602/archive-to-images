@@ -10,15 +10,15 @@ def test_create_file(fs):
     """
     Creation of the fake file system environment
     """
-    folder = "/test"
-    fs.create_dir(folder)
+    test_folder = "test"
+    fs.create_dir(test_folder)
     for i in range(0, 10):
-        fs.create_file(f"{folder}/test{i}.txt", contents=f"This is element {i}")
+        fs.create_file(f"{test_folder}/test{i}.txt", contents=f"This is element {i}")
 
     """
     Trasforming archive into images
     """
-    Transformer(["/test"], "collection", 1024).process()
+    Transformer([test_folder], "collection", 1024).process()
 
     """
     Recovering archive from images
@@ -29,15 +29,16 @@ def test_create_file(fs):
     """
     Extracting archive
     """
+    tmp_folder = "tmp"
     with zipfile.ZipFile("/recovered_collection", "r") as zip_ref:
-        zip_ref.extractall("/tmp")
+        zip_ref.extractall(tmp_folder)
 
     """
     Data verification
     """
     for i in range(0, 10):
         hashlib.sha512(
-            open(f"/test/test{i}.txt", "rb").read()
+            open(f"/{test_folder}/test{i}.txt", "rb").read()
         ).hexdigest() == hashlib.sha512(
-            open(f"/tmp/test/test{i}.txt", "rb").read()
+            open(f"/{tmp_folder}/{test_folder}/test{i}.txt", "rb").read()
         ).hexdigest()
