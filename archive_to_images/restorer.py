@@ -3,7 +3,7 @@
 
 from typing import Dict, List, Tuple
 
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from rich.progress import Progress
 
 from archive_to_images.processor import Processor
@@ -14,11 +14,11 @@ class Restorer(Processor):
     Restorer class
     """
 
-    def __init__(self, files, verbose=False):
+    def __init__(self, paths, verbose=False):
         """
         Restorer class constructor
         """
-        super().__init__(files, verbose)
+        super().__init__(paths, verbose)
         self._image_mapping: Dict[str, List[Tuple[int, str, int]]] = {}
 
     def _initialize(self) -> None:
@@ -44,12 +44,20 @@ class Restorer(Processor):
             bar_text="Scanning", total_iterations=len(self._file_set)
         )
         for file in self._file_set:
-            self._debug(f"Scanning file {file}")
-            image = Image.open(file).convert("L")
+            self._debug(f"Scanning file: {file}")
+            try:
+                image = Image.open(file).convert("L")
+            except UnidentifiedImageError:
+                self._warning(f"Skipping file: {file} - Not an image")
+                continue
 
-            collection_name = image.info[self._NAME_TAG]
-            index = image.info[self._INDEX_TAG]
-            padding = image.info[self._PADDING_TAG]
+            if self._NAME_TAG in image.info:
+                collection_name = image.info[self._NAME_TAG]
+                index = image.info[self._INDEX_TAG]
+                padding = image.info[self._PADDING_TAG]
+            else:
+                self._warning(f"Skipping file: {file} - No metadata")
+                continue
 
             item = (int(index), file, int(padding))
             if collection_name not in self._image_mapping:

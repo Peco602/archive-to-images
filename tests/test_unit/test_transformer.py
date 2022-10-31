@@ -8,20 +8,20 @@ from archive_to_images.transformer import Transformer
 
 
 def test_instantiation():
-    files = ["."]
+    paths = ["."]
     collection_name = "test_collection"
     image_size = 1024
     transformer = Transformer(
-        files=files, collection_name=collection_name, image_size=image_size
+        paths=paths, collection_name=collection_name, image_size=image_size
     )
-    assert transformer._input_files == files
+    assert transformer._input_paths == paths
     assert transformer._label == collection_name
     assert transformer._chunk_size == image_size
 
 
 def test_initialize():
     transformer = Transformer(
-        files=["."], collection_name="test_collection", image_size=1024
+        paths=["."], collection_name="test_collection", image_size=1024
     )
     transformer._initialize()
     assert transformer._chunk_index == 0

@@ -7,13 +7,13 @@ from archive_to_images.restorer import Restorer
 
 
 def test_instantiation():
-    files = ["."]
-    restorer = Restorer(files=files)
-    assert restorer._input_files == files
+    paths = ["."]
+    restorer = Restorer(paths=paths)
+    assert restorer._input_paths == paths
 
 
 def test_initialize():
-    restorer = Restorer(files=["."])
+    restorer = Restorer(paths=["."])
     restorer._initialize()
     assert len(restorer._file_set) == 0
 

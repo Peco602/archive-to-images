@@ -104,13 +104,14 @@ ipynbcheckpoints-remove:
 .PHONY: pytestcache-remove
 pytestcache-remove:
 	find . | grep -E ".pytest_cache" | xargs rm -rf
+	rm -rf htmlcov
 
 .PHONY: build-remove
 build-remove:
-	rm -rf build/
+	rm -rf build/ dist/
 
 .PHONY: cleanup
-cleanup: pycache-remove dsstore-remove mypycache-remove ipynbcheckpoints-remove pytestcache-remove
+cleanup: build-remove pycache-remove dsstore-remove mypycache-remove ipynbcheckpoints-remove pytestcache-remove
 
 #* Buildi
 .PHONY: build

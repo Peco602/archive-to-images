@@ -24,12 +24,12 @@ class Transformer(Processor):
     """
 
     def __init__(
-        self, files, collection_name, image_size, password=None, verbose=False
+        self, paths, collection_name, image_size, password=None, verbose=False
     ):
         """
         Transformer class constructor
         """
-        super().__init__(files, verbose)
+        super().__init__(paths, verbose)
         self._label = collection_name
         self._chunk_size = image_size
         self._archive_password = password

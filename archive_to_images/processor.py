@@ -16,11 +16,11 @@ class Processor:
     _PADDING_TAG = "padding"
     _IMAGE_EXTENSION = ".png"
 
-    def __init__(self, files, verbose=False):
+    def __init__(self, paths, verbose=False):
         """
         Processor class constructor.
         """
-        self._input_files = files
+        self._input_paths = paths
         self._verbose = verbose
         self._file_set: Set[str] = set()
         self._progress = None
@@ -36,16 +36,16 @@ class Processor:
         Collects input files via directory walking.
         """
         self._info("Collecting input files")
-        for input_file in self._input_files:
+        for input_file in self._input_paths:
             if os.path.isdir(input_file):
-                self._info(f"Walking directory {input_file}")
+                self._debug(f"Walking directory {input_file}")
                 for path, _, directory_files in os.walk(input_file):
                     for file in directory_files:
                         self._file_set.add(os.path.join(path, file))
-                        self._info(f"Adding file {file}")
+                        self._debug(f"Adding file {file}")
             else:
                 self._file_set.add(input_file)
-                self._info(f"Adding file {input_file}")
+                self._debug(f"Adding file {input_file}")
 
     def _add_progress_task(self, bar_text: str, total_iterations: int) -> Any:
         """
@@ -68,14 +68,21 @@ class Processor:
         Show debug message.
         """
         if self._progress and self._verbose:
-            self._progress.console.print(f"[yellow][*] {message}")
+            self._progress.console.print(f"[*] {message}")
 
     def _info(self, message: str) -> None:
         """
         Show info message.
         """
         if self._progress:
-            self._progress.console.print(f"[+] {message}")
+            self._progress.console.print(f"[green][+] {message}")
+
+    def _warning(self, message: str) -> None:
+        """
+        Show warning message.
+        """
+        if self._progress:
+            self._progress.console.print(f"[yellow][-] {message}")
 
     def _error(self, message: str) -> None:
         """

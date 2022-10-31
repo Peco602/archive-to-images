@@ -2,7 +2,7 @@ from archive_to_images.processor import Processor
 
 
 def test_initialize():
-    processor = Processor(files=["."])
+    processor = Processor(paths=["."])
     processor._initialize()
     assert len(processor._file_set) == 0
 
