@@ -9,12 +9,24 @@ class Processor:
     Base class
     """
 
+    _ARCHIVE_EXT = ".zip"
+    _NAME_TAG = "name"
+    _INDEX_TAG = "index"
+    _PADDING_TAG = "padding"
+
     def __init__(self, files):
         """
         Processor class constructor.
         """
         self._input_files = files
         self._file_set: Set[str] = set()
+
+    def _initialize(self) -> None:
+        """
+        Initializes the processor before a conversion.
+        """
+        logging.info("Initialization")
+        self._file_set = set()
 
     def _collect_input_files(self) -> None:
         """

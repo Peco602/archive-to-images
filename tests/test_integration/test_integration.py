@@ -19,18 +19,18 @@ def test_create_file(fs):
     Trasforming archive into images
     """
     Transformer([test_folder], "collection", 1024).process()
+    assert Path("collection").exists()
 
     """
     Recovering archive from images
     """
-    Recover("/collection").process()
-    assert Path("/recovered_collection").exists()
+    Recover(["collection"]).process()
 
     """
     Extracting archive
     """
     tmp_folder = "tmp"
-    with zipfile.ZipFile("/recovered_collection", "r") as zip_ref:
+    with zipfile.ZipFile("collection.zip", "r") as zip_ref:
         zip_ref.extractall(tmp_folder)
 
     """

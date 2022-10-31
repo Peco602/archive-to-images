@@ -1,6 +1,9 @@
 """Example of code."""
 
 
+from typing import Dict, List, Tuple
+
+import logging
 import os
 
 from PIL import Image
@@ -13,44 +16,66 @@ class Recover(Processor):
     Recover class
     """
 
-    def __init__(self, folder):
-        self.folder = folder
-        self.mapping = {}
+    def __init__(self, files):
+        """
+        Recover class constructor
+        """
+        super().__init__(files)
 
-    def _scan_folder(self) -> None:
-        for path, _, files in os.walk(self.folder):
-            for f in files:
-                self._read_metadata(os.path.join(path, f))
+    def _initialize(self) -> None:
+        """
+        Initializes the recover before a conversion.
+        """
+        super()._initialize()
+        self.image_mapping: Dict[str, List[Tuple[int, str, int]]] = {}
 
-    def _read_metadata(self, file):
-        image = Image.open(file).convert("L")
-        name = image.info["name"]
-        index = image.info["index"]
-        padding = image.info["padding"]
-        if name not in self.mapping:
-            self.mapping[name] = [(int(index), file, int(padding))]
-        else:
-            self.mapping[name].append((int(index), file, int(padding)))
+    def _collect_input_files(self) -> None:
+        """
+        Collects input files via directory walking.
+        """
+        super()._collect_input_files()
 
-    def _restore_file(self):
-        for k in self.mapping.keys():
-            target_name = "recovered_" + k
-            target_data = []
-            self.mapping[k] = sorted(self.mapping[k])
-            print(self.mapping[k])
-            for i in self.mapping[k]:
-                # opening a  image
-                print(f"adding {i[1]}")
-                image = Image.open(i[1]).convert("L")
-                image_data = list(Image.Image.getdata(image))
-                target_data.extend(image_data[: -i[2]])
+    def _scan_input_files(self):
+        """
+        Analyses all input files for archive reconstruction.
+        """
+        for file in self._file_set:
+            image = Image.open(file).convert("L")
 
-            target_bytes = bytearray(target_data)
-            immutable_bytes = bytes(target_bytes)
+            collection_name = image.info[self._NAME_TAG]
+            index = image.info[self._INDEX_TAG]
+            padding = image.info[self._PADDING_TAG]
 
-            with open(target_name, "wb") as binary_file:
-                binary_file.write(immutable_bytes)
+            item = (int(index), file, int(padding))
+            if collection_name not in self.image_mapping:
+                self.image_mapping[collection_name] = [item]
+            else:
+                self.image_mapping[collection_name].append(item)
+
+    def _restore_archive(self):
+        """
+        Restores archive from images binary data
+        """
+        for collection_name in self.image_mapping.keys():
+            restored_archive_name = collection_name + self._ARCHIVE_EXT
+            self.image_mapping[collection_name] = sorted(
+                self.image_mapping[collection_name]
+            )
+
+            with open(restored_archive_name, "wb") as binary_file:
+                for item in self.image_mapping[collection_name]:
+                    print(f"adding {item[1]}")
+                    image = Image.open(item[1]).convert("L")
+                    image_data = list(Image.Image.getdata(image))
+                    target_bytes = bytearray(image_data[: -item[2]])
+                    immutable_bytes = bytes(target_bytes)
+                    binary_file.write(immutable_bytes)
 
     def process(self):
-        self._scan_folder()
-        self._restore_file()
+        """
+        Performs the conversion from images to archive
+        """
+        self._initialize()
+        self._collect_input_files()
+        self._scan_input_files()
+        self._restore_archive()

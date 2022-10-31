@@ -33,10 +33,15 @@ class Transformer(Processor):
         """
         Initializes the transformer before a conversion.
         """
-        logging.info("Initialization")
+        super()._initialize()
         self._image_index = 0
-        self._file_set = set()
         self._archive_file = NamedTemporaryFile().name
+
+    def _collect_input_files(self) -> None:
+        """
+        Collects input files via directory walking.
+        """
+        super()._collect_input_files()
 
     def _create_archive(self) -> None:
         """
@@ -76,9 +81,9 @@ class Transformer(Processor):
         image.putdata(chunk_data)
 
         metadata: PngInfo = PngInfo()
-        metadata.add_text("name", self._label)
-        metadata.add_text("index", str(self._image_index))
-        metadata.add_text("padding", str(padding))
+        metadata.add_text(self._NAME_TAG, self._label)
+        metadata.add_text(self._INDEX_TAG, str(self._image_index))
+        metadata.add_text(self._PADDING_TAG, str(padding))
 
         image_name: str = self._label + os.sep + str(uuid.uuid1()) + ".png"
         os.makedirs(os.path.dirname(image_name), exist_ok=True)

@@ -1,6 +1,12 @@
 from archive_to_images.processor import Processor
 
 
+def test_initialize():
+    processor = Processor(files=["."])
+    processor._initialize()
+    assert len(processor._file_set) == 0
+
+
 def test_collect_input_files(fs):
     """
     Fake filesystem environment creation
