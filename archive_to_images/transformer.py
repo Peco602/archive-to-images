@@ -1,7 +1,7 @@
-"""Transformer class."""
+"""Transformer module"""
 
 
-from typing import Optional, Set, Tuple
+from typing import Optional, Tuple
 
 import logging
 import math
@@ -12,6 +12,7 @@ from zipfile import ZipFile
 
 from PIL import Image
 from PIL.PngImagePlugin import PngInfo
+from pyzipper import WZ_AES, ZIP_LZMA, AESZipFile
 
 from archive_to_images.processor import Processor
 
@@ -21,13 +22,14 @@ class Transformer(Processor):
     Transformer class
     """
 
-    def __init__(self, files, collection_name, image_size):
+    def __init__(self, files, collection_name, image_size, password=None):
         """
         Transformer class constructor
         """
         super().__init__(files)
         self._label = collection_name
         self._chunk_size = image_size
+        self._archive_password = password
 
     def _initialize(self) -> None:
         """
@@ -49,12 +51,23 @@ class Transformer(Processor):
         Creates a zip archive from input file
         """
         logging.info(f"Creating temporary archive {self._archive_file}")
-        with ZipFile(self._archive_file, "w") as zip:
-            for file in self._file_set:
-                logging.debug(
-                    f"Adding file {file} to temporary archive {self._archive_file}"
-                )
-                zip.write(file)
+        if self._archive_password:
+            logging.debug("Creating protected zip file")
+            zip = AESZipFile(
+                self._archive_file, "w", compression=ZIP_LZMA, encryption=WZ_AES
+            )
+            zip.setpassword(self._archive_password.encode("UTF-8"))
+        else:
+            logging.debug("Creating unprotected zip file")
+            zip = ZipFile(self._archive_file, "w")
+
+        for file in self._file_set:
+            logging.debug(
+                f"Adding file {file} to temporary archive {self._archive_file}"
+            )
+            zip.write(file)
+
+        zip.close()
 
     def _transform_archive(self) -> None:
         """

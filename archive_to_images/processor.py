@@ -1,3 +1,5 @@
+"""Processor module"""
+
 from typing import Set
 
 import logging
@@ -6,7 +8,7 @@ import os
 
 class Processor:
     """
-    Base class
+    Processor class
     """
 
     _ARCHIVE_EXT = ".zip"

@@ -64,8 +64,8 @@ lint: test check-codestyle mypy check-safety
 
 .PHONY: update-dev-deps
 update-dev-deps:
-	poetry add -D bandit@latest darglint@latest "isort[colors]@latest" mypy@latest pre-commit@latest pydocstyle@latest pylint@latest pytest@latest pyupgrade@latest safety@latest coverage@latest coverage-badge@latest pytest-html@latest pytest-cov@latest
-	poetry add -D --allow-prereleases black@latest
+	poetry add --group dev bandit@latest darglint@latest "isort[colors]@latest" mypy@latest pre-commit@latest pydocstyle@latest pylint@latest pytest@latest pyupgrade@latest safety@latest coverage@latest coverage-badge@latest pytest-html@latest pytest-cov@latest
+	poetry add --group dev --allow-prereleases black@latest
 
 #* Docker
 # Example: make docker-build VERSION=latest

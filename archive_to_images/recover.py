@@ -1,10 +1,9 @@
-"""Example of code."""
+"""Recover module"""
 
 
 from typing import Dict, List, Tuple
 
 import logging
-import os
 
 from PIL import Image
 
