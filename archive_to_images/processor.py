@@ -1,8 +1,7 @@
 """Processor module"""
 
-from typing import Set
+from typing import Any, Set
 
-import logging
 import os
 
 
@@ -15,13 +14,16 @@ class Processor:
     _NAME_TAG = "name"
     _INDEX_TAG = "index"
     _PADDING_TAG = "padding"
+    _IMAGE_EXTENSION = ".png"
 
-    def __init__(self, files):
+    def __init__(self, files, verbose=False):
         """
         Processor class constructor.
         """
         self._input_files = files
+        self._verbose = verbose
         self._file_set: Set[str] = set()
+        self._progress = None
 
     def _initialize(self) -> None:
         """
@@ -33,14 +35,51 @@ class Processor:
         """
         Collects input files via directory walking.
         """
-        logging.info(f"Collecting input files")
+        self._info("Collecting input files")
         for input_file in self._input_files:
             if os.path.isdir(input_file):
-                logging.debug(f"Walking directory {input_file}")
+                self._info(f"Walking directory {input_file}")
                 for path, _, directory_files in os.walk(input_file):
                     for file in directory_files:
                         self._file_set.add(os.path.join(path, file))
-                        logging.debug(f"Adding file {file}")
+                        self._info(f"Adding file {file}")
             else:
                 self._file_set.add(input_file)
-                logging.debug(f"Adding file {input_file}")
+                self._info(f"Adding file {input_file}")
+
+    def _add_progress_task(self, bar_text: str, total_iterations: int) -> Any:
+        """
+        Add task to the progress bar.
+        """
+        if self._progress:
+            return self._progress.add_task(f"[red]{bar_text}", total=total_iterations)
+
+        return None
+
+    def _update_progress_task(self, progress_task: Any, advance: int) -> None:
+        """
+        Update task to the progress bar.
+        """
+        if self._progress:
+            self._progress.update(progress_task, advance=advance)
+
+    def _debug(self, message: str) -> None:
+        """
+        Show debug message.
+        """
+        if self._progress and self._verbose:
+            self._progress.console.print(f"[yellow][*] {message}")
+
+    def _info(self, message: str) -> None:
+        """
+        Show info message.
+        """
+        if self._progress:
+            self._progress.console.print(f"[+] {message}")
+
+    def _error(self, message: str) -> None:
+        """
+        Show error message.
+        """
+        if self._progress:
+            self._progress.console.print(f"[red][!] {message}")

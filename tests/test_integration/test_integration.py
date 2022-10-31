@@ -4,7 +4,7 @@ from pathlib import Path
 
 from pyzipper import AESZipFile
 
-from archive_to_images.recover import Recover
+from archive_to_images.restorer import Restorer
 from archive_to_images.transformer import Transformer
 
 
@@ -27,9 +27,9 @@ def test_unprotected_archive(fs):
     assert Path(collection).exists()
 
     """
-    Recovering archive from images
+    Restorering archive from images
     """
-    Recover([collection]).process()
+    Restorer([collection]).process()
 
     """
     Extracting archive
@@ -69,9 +69,9 @@ def test_protected_archive(fs):
     assert Path(collection).exists()
 
     """
-    Recovering archive from images
+    Restorering archive from images
     """
-    Recover([collection]).process()
+    Restorer([collection]).process()
 
     """
     Extracting archive

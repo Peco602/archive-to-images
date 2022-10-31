@@ -3,16 +3,17 @@
 
 from typing import Optional, Tuple
 
-import logging
 import math
 import os
 import uuid
+from pathlib import Path
 from tempfile import NamedTemporaryFile
 from zipfile import ZipFile
 
 from PIL import Image
 from PIL.PngImagePlugin import PngInfo
 from pyzipper import WZ_AES, ZIP_LZMA, AESZipFile
+from rich.progress import Progress
 
 from archive_to_images.processor import Processor
 
@@ -22,11 +23,13 @@ class Transformer(Processor):
     Transformer class
     """
 
-    def __init__(self, files, collection_name, image_size, password=None):
+    def __init__(
+        self, files, collection_name, image_size, password=None, verbose=False
+    ):
         """
         Transformer class constructor
         """
-        super().__init__(files)
+        super().__init__(files, verbose)
         self._label = collection_name
         self._chunk_size = image_size
         self._archive_password = password
@@ -35,7 +38,7 @@ class Transformer(Processor):
         """
         Initializes the transformer before a conversion.
         """
-        logging.info(f"Transformer initialization")
+        self._info(f"Transformer initialization")
         super()._initialize()
         self._chunk_index = 0
         self._archive_file = NamedTemporaryFile().name
@@ -50,22 +53,27 @@ class Transformer(Processor):
         """
         Creates a zip archive from input file
         """
-        logging.info(f"Creating temporary archive {self._archive_file}")
+        self._info(f"Creating temporary archive {self._archive_file}")
+
+        iterations = len(self._file_set)
+        task_create_archive = self._add_progress_task(
+            bar_text="Archiving", total_iterations=iterations
+        )
+
         if self._archive_password:
-            logging.debug("Creating protected zip file")
+            self._debug("Creating protected zip file")
             zip = AESZipFile(
                 self._archive_file, "w", compression=ZIP_LZMA, encryption=WZ_AES
             )
             zip.setpassword(self._archive_password.encode("UTF-8"))
         else:
-            logging.debug("Creating unprotected zip file")
+            self._debug("Creating unprotected zip file")
             zip = ZipFile(self._archive_file, "w")
 
         for file in self._file_set:
-            logging.debug(
-                f"Adding file {file} to temporary archive {self._archive_file}"
-            )
+            self._debug(f"Adding file {file} to temporary archive {self._archive_file}")
             zip.write(file)
+            self._update_progress_task(progress_task=task_create_archive, advance=1)
 
         zip.close()
 
@@ -73,13 +81,19 @@ class Transformer(Processor):
         """
         Splits the archive in multiple chunks and transforms them into images
         """
-        logging.info(f"Archive transformation")
+        self._info("Archive transformation")
         with open(self._archive_file, mode="rb") as f:
+            iterations = int(Path(self._archive_file).stat().st_size / self._chunk_size)
+            task_transform_archive = self._add_progress_task(
+                bar_text="Chunking", total_iterations=iterations
+            )
             chunk = f.read(self._chunk_size)
             while chunk:
-                logging.debug(f"Processing chunk {self._chunk_index}")
                 _ = self._transform_chunk(chunk)
                 self._chunk_index = self._chunk_index + 1
+                self._update_progress_task(
+                    progress_task=task_transform_archive, advance=1
+                )
                 chunk = f.read(self._chunk_size)
 
     def _transform_chunk(self, chunk_data: bytes) -> str:
@@ -101,10 +115,12 @@ class Transformer(Processor):
         metadata.add_text(self._INDEX_TAG, str(self._chunk_index))
         metadata.add_text(self._PADDING_TAG, str(padding))
 
-        image_name: str = self._label + os.sep + str(uuid.uuid1()) + ".png"
+        image_name: str = (
+            self._label + os.sep + str(uuid.uuid1()) + self._IMAGE_EXTENSION
+        )
         os.makedirs(os.path.dirname(image_name), exist_ok=True)
         image.save(image_name, pnginfo=metadata)
-        logging.info(f"Created chunk image {image_name}")
+        self._debug(f"Created chunk image {image_name}")
 
         return image_name
 
@@ -155,8 +171,9 @@ class Transformer(Processor):
         """
         Performs the conversion from archive to images
         """
-        logging.info("Started transformer processing")
-        self._initialize()
-        self._collect_input_files()
-        self._create_archive()
-        self._transform_archive()
+        self._info("Started transformer processing")
+        with Progress() as self._progress:
+            self._initialize()
+            self._collect_input_files()
+            self._create_archive()
+            self._transform_archive()
