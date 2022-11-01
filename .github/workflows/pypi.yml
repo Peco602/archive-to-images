@@ -1,8 +1,11 @@
 name: pypi
 on:
   workflow_run:
-    workflows: ["build"]
-    branches: [main, dev]
+    workflows: 
+      - build
+    branches:
+      - main
+      - dev
     types:
       - completed
 
