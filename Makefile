@@ -64,8 +64,8 @@ lint: test check-codestyle mypy check-safety
 
 .PHONY: update-dev-deps
 update-dev-deps:
-	poetry add -D bandit@latest darglint@latest "isort[colors]@latest" mypy@latest pre-commit@latest pydocstyle@latest pylint@latest pytest@latest pyupgrade@latest safety@latest coverage@latest coverage-badge@latest pytest-html@latest pytest-cov@latest
-	poetry add -D --allow-prereleases black@latest
+	poetry add --group dev bandit@latest darglint@latest "isort[colors]@latest" mypy@latest pre-commit@latest pydocstyle@latest pylint@latest pytest@latest pyupgrade@latest safety@latest coverage@latest coverage-badge@latest pytest-html@latest pytest-cov@latest
+	poetry add --group dev --allow-prereleases black@latest
 
 #* Docker
 # Example: make docker-build VERSION=latest
@@ -104,10 +104,24 @@ ipynbcheckpoints-remove:
 .PHONY: pytestcache-remove
 pytestcache-remove:
 	find . | grep -E ".pytest_cache" | xargs rm -rf
+	rm -rf htmlcov
 
 .PHONY: build-remove
 build-remove:
-	rm -rf build/
+	rm -rf build/ dist/
 
 .PHONY: cleanup
-cleanup: pycache-remove dsstore-remove mypycache-remove ipynbcheckpoints-remove pytestcache-remove
+cleanup: build-remove pycache-remove dsstore-remove mypycache-remove ipynbcheckpoints-remove pytestcache-remove
+
+#* Buildi
+.PHONY: build
+build:
+	poetry build
+
+#* Publish
+# export POETRY_PYPI_TOKEN_PYPI=my-token
+# export POETRY_HTTP_BASIC_PYPI_USERNAME=<username>
+# export POETRY_HTTP_BASIC_PYPI_PASSWORD=<password>
+.PHONY: publish
+publish: build
+	poetry publish

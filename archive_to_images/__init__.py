@@ -1,4 +1,3 @@
-# type: ignore[attr-defined]
 """Awesome `archive-to-images` is a Python cli/package created with https://github.com/TezRomacH/python-package-template"""
 
 import sys
