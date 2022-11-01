@@ -11,7 +11,7 @@
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/Peco602/archive-to-images/blob/main/.pre-commit-config.yaml)
 [![Semantic Versions](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--versions-e10079.svg)](https://github.com/Peco602/archive-to-images/releases)
 [![License](https://img.shields.io/github/license/Peco602/archive-to-images)](https://github.com/Peco602/archive-to-images/blob/main/LICENSE)
-![Coverage Report](assets/images/coverage.svg)
+![Coverage Report](https://raw.githubusercontent.com/Peco602/archive-to-images/dev/assets/images/coverage.svg)
 
 `archive-to-images` is a Python CLI to transform archives into images and reverse.
 
@@ -59,3 +59,8 @@ archive-to-images restore --path /home/alice/Downloads/
 Do you like my work or did you find it useful?
 
 <a href="https://www.buymeacoffee.com/peco602" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
+
+## Credits
+
+`archive-to-images` is a Python CLI created with https://github.com/TezRomacH/python-package-template.
