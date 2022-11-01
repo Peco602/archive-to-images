@@ -20,7 +20,7 @@ jobs:
         run: make poetry-download
 
       - name: Set up cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v3.0.11
         with:
           path: .venv
           key: venv-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('poetry.lock') }}
@@ -45,3 +45,18 @@ jobs:
       - name: Build package
         run: |
           make build
+
+      - name: Publish package to Test PyPI
+        if: ${{ github.ref == 'refs/head/dev' }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
+
+      - name: Publish package to PyPI
+        if: ${{ github.ref == 'refs/head/main' }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}

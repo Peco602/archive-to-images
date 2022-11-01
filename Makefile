@@ -4,7 +4,7 @@ PYTHON := python
 PYTHONPATH := `pwd`
 
 #* Docker variables
-IMAGE := archive_to_images
+IMAGE := peco602/archive_to_images
 VERSION := latest
 
 #* Poetry
@@ -75,7 +75,7 @@ docker-build:
 	@echo Building docker $(IMAGE):$(VERSION) ...
 	docker build \
 		-t $(IMAGE):$(VERSION) . \
-		-f ./docker/Dockerfile --no-cache
+		-f ./Dockerfile --no-cache
 
 # Example: make docker-remove VERSION=latest
 # Example: make docker-remove IMAGE=some_name VERSION=0.1.0
@@ -83,6 +83,13 @@ docker-build:
 docker-remove:
 	@echo Removing docker $(IMAGE):$(VERSION) ...
 	docker rmi -f $(IMAGE):$(VERSION)
+
+# Example: make docker-push VERSION=latest
+# Example: make docker-push IMAGE=some_name VERSION=0.1.0
+.PHONY: docker-push
+docker-push:
+	@echo Pushing docker $(IMAGE):$(VERSION) ...
+	docker push $(IMAGE):$(VERSION)
 
 #* Cleaning
 .PHONY: pycache-remove
@@ -113,15 +120,7 @@ build-remove:
 .PHONY: cleanup
 cleanup: build-remove pycache-remove dsstore-remove mypycache-remove ipynbcheckpoints-remove pytestcache-remove
 
-#* Buildi
+#* Build
 .PHONY: build
 build:
 	poetry build
-
-#* Publish
-# export POETRY_PYPI_TOKEN_PYPI=my-token
-# export POETRY_HTTP_BASIC_PYPI_USERNAME=<username>
-# export POETRY_HTTP_BASIC_PYPI_PASSWORD=<password>
-.PHONY: publish
-publish: build
-	poetry publish
