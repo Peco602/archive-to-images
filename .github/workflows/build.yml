@@ -41,3 +41,7 @@ jobs:
     - name: Run safety checks
       run: |
         make check-safety
+
+    - name: Build package
+      run: |
+        make build

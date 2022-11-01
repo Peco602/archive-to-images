@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "archive-to-images"
 version = "0.1.0"
-description = "`archive-to-images` is a Python CLI created with https://github.com/TezRomacH/python-package-template"
+description = "`archive-to-images` is a Python CLI to transform archives into images and reverse"
 readme = "README.md"
 authors = ["Giovanni Pecoraro <giovanni1.pecoraro@protonmail.com>"]
 license = "MIT"
@@ -82,7 +82,7 @@ exclude = '''
 
 [tool.isort]
 # https://github.com/timothycrosley/isort/
-py_version = 37
+py_version = 38
 line_length = 88
 
 known_typing = ["typing", "types", "typing_extensions", "mypy", "mypy_extensions"]
