@@ -13,7 +13,7 @@
 [![License](https://img.shields.io/github/license/Peco602/archive-to-images)](https://github.com/Peco602/archive-to-images/blob/main/LICENSE)
 ![Coverage Report](assets/images/coverage.svg)
 
-Awesome `archive-to-images` is a Python cli/package to transform archives into images and reverse.
+`archive-to-images` is a Python CLI to transform archives into images and reverse.
 
 </div>
 
@@ -35,21 +35,23 @@ pip install archive-to-images
 archive-to-images transform --path /home/alice/Desktop --path /home/alice/Documents --name ARCHIVE_ALICE
 ```
 
-2. Create another image collection `ARCHIVE_BOB` from other paths. The maximum image size can be set via the `-s` parameter. The archived data can be optionally protected via password by adding the `-e` parameter. The password must be provided via prompt.
+You can create additional image collections from other paths. 
 
 ```
 archive-to-images transform --path /home/bob/Downloads --name ARCHIVE_BOB -s 5 -e
 ```
 
-3. Upload the pictures to your favorite photo cloud storage.
+The maximum image size can be set via the `-s` parameter. The archived data can be optionally protected via password by adding the `-e` parameter. The password must be provided via prompt.
 
-4. Download all the images and restore the archives.
+2. Upload the pictures to your favorite photo cloud storage to store them safely.
+
+3. Download all the images when you need to restore your archive.
 
 ```
 archive-to-images restore --path /home/alice/Downloads/
 ```
 
-5. The archives will appear as `zip` files. In case of encryption the archive can be extracted via [7-Zip](https://www.7-zip.org/download.html).
+4. The archives will appear as `zip` files. In case of encryption the archive can be extracted via [7-Zip](https://www.7-zip.org/download.html).
 
 
 ## Buy me a coffee

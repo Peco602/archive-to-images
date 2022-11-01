@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "archive-to-images"
 version = "0.1.0"
-description = "Awesome `archive-to-images` is a Python cli/package created with https://github.com/TezRomacH/python-package-template"
+description = "`archive-to-images` is a Python CLI created with https://github.com/TezRomacH/python-package-template"
 readme = "README.md"
 authors = ["Giovanni Pecoraro <giovanni1.pecoraro@protonmail.com>"]
 license = "MIT"
@@ -60,7 +60,7 @@ pyfakefs = "5.0.0"
 
 [tool.black]
 # https://github.com/psf/black
-target-version = ["py37"]
+target-version = ["py38"]
 line-length = 88
 color = true
 
