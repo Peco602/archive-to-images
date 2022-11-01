@@ -1,13 +1,5 @@
 name: pypi
-on:
-  workflow_run:
-    workflows: 
-      - build
-    branches:
-#      - main
-      - dev
-    types:
-      - completed
+on: [push, pull_request]
 
 jobs:
   on-success:
