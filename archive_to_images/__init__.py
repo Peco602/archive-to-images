@@ -1,4 +1,4 @@
-"""Awesome `archive-to-images` is a Python cli/package created with https://github.com/TezRomacH/python-package-template"""
+"""Archive-To-Images is a Python CLI to transform archives into images and reverse."""
 
 import sys
 

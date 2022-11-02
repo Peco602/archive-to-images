@@ -1,4 +1,4 @@
-# archive-to-images
+# Archive-To-Images
 
 <div align="center">
 
@@ -13,7 +13,7 @@
 [![License](https://img.shields.io/github/license/Peco602/archive-to-images)](https://github.com/Peco602/archive-to-images/blob/main/LICENSE)
 ![Coverage Report](https://raw.githubusercontent.com/Peco602/archive-to-images/dev/assets/images/coverage.svg)
 
-`archive-to-images` is a Python CLI to transform archives into images and reverse.
+**Archive-To-Images** is a Python CLI to transform archives into images and reverse.
 
 </div>
 
@@ -27,31 +27,28 @@ pip install archive-to-images
 ```
 
 
-## Usage
+## Usage as CLI
 
-1. Create an image collection `ARCHIVE_ALICE` from multiple paths.
+Create an image collection from data contained in multiple paths multiple paths.
 
 ```
 archive-to-images transform --path /home/alice/Desktop --path /home/alice/Documents --name ARCHIVE_ALICE
 ```
 
-You can create additional image collections from other paths. 
+Set the maximum image size in MB (default: 1):
 
 ```
-archive-to-images transform --path /home/bob/Downloads --name ARCHIVE_BOB -s 5 -e
+archive-to-images transform --path /home/alice/Desktop --path /home/alice/Documents --name ARCHIVE_ALICE -s 5
 ```
 
-The maximum image size can be set via the `-s` parameter. The archived data can be optionally protected via password by adding the `-e` parameter. The password must be provided via prompt.
-
-2. Upload the pictures to your favorite photo cloud storage to store them safely.
-
-3. Download all the images when you need to restore your archive.
+Encrypte the data with a password:
 
 ```
-archive-to-images restore --path /home/alice/Downloads/
+archive-to-images transform --path /home/alice/Desktop --path /home/alice/Documents --name ARCHIVE_ALICE -s 5 -e
 ```
 
-4. The archives will appear as `zip` files. In case of encryption the archive can be extracted via [7-Zip](https://www.7-zip.org/download.html).
+
+## Usage as docker
 
 
 ## Buy me a coffee
@@ -61,6 +58,8 @@ Do you like my work or did you find it useful?
 <a href="https://www.buymeacoffee.com/peco602" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 
-## Credits
+## License
 
-`archive-to-images` is a Python CLI created with https://github.com/TezRomacH/python-package-template.
+Copyright (c) 2022-present [Giovanni Pecoraro](https://github.com/Peco602)
+
+Licensed under [MIT License](https://github.com/Peco602/archive-to-images/blob/main/LICENSE)

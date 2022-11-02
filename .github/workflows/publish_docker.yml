@@ -1,11 +1,12 @@
-name: dockerhub
+name: Publish Docker image
+
 on:
-  push:
-    branches:
-      - 'main'
+    push:
+        tags:
+            - "v*.*.*"
 
 jobs:
-  dockerhub:
+  push_to_dockerhub:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

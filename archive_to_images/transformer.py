@@ -96,6 +96,9 @@ class Transformer(Processor):
                 )
                 chunk = f.read(self._chunk_size)
 
+            self._debug("Removing temporary files")
+            os.remove(self._archive_file)
+
     def _transform_chunk(self, chunk_data: bytes) -> str:
         """Transforms a data chunk into an image
 

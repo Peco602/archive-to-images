@@ -20,7 +20,7 @@ class ChunkSize(str, Enum):
 
 app = typer.Typer(
     name="archive-to-images",
-    help="`archive-to-images` is a Python cli/package to transform archives into images and reverse.",
+    help="Archive-To-Images is a Python CLI to transform archives into images and reverse.",
     add_completion=False,
 )
 console = Console()
