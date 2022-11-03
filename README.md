@@ -11,7 +11,7 @@
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/Peco602/archive-to-images/blob/main/.pre-commit-config.yaml)
 [![Semantic Versions](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--versions-e10079.svg)](https://github.com/Peco602/archive-to-images/releases)
 [![License](https://img.shields.io/github/license/Peco602/archive-to-images)](https://github.com/Peco602/archive-to-images/blob/main/LICENSE)
-![Coverage Report](https://raw.githubusercontent.com/Peco602/archive-to-images/dev/assets/images/coverage.svg)
+![Coverage Report](https://raw.githubusercontent.com/Peco602/archive-to-images/main/assets/images/coverage.svg)
 
 **Archive-To-Images** is a Python CLI to transform archives into images and reverse.
 
