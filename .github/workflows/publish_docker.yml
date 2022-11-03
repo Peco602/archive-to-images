@@ -17,8 +17,12 @@ jobs:
             username: ${{ secrets.DOCKERHUB_USERNAME }}
             password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build
-        run : make docker-build
+      - name: Build Docker images
+        run : |
+          make docker-build VERSION=${{ github.ref_name }}
+          make docker-build
 
-      - name: Publish
-        run : make docker-push
+      - name: Publish Docker images
+        run : |
+          make docker-push VERSION=${{ github.ref_name }}
+          make docker-push

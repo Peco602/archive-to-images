@@ -83,7 +83,9 @@ class Transformer(Processor):
         """
         self._info("Archive transformation")
         with open(self._archive_file, mode="rb") as f:
-            iterations = int(Path(self._archive_file).stat().st_size / self._chunk_size)
+            iterations = math.ceil(
+                Path(self._archive_file).stat().st_size / self._chunk_size
+            )
             task_transform_archive = self._add_progress_task(
                 bar_text="Chunking", total_iterations=iterations
             )

@@ -7,6 +7,7 @@ LABEL maintainer="Peco602 <giovanni1.pecoraro@protonmail.com>"
 RUN mkdir /app /workspace
 
 COPY . /app
+WORKDIR /app
 
 ENV PYTHONPATH=${PYTHONPATH}:${PWD} 
 
