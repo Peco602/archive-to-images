@@ -83,7 +83,9 @@ class Transformer(Processor):
         """
         self._info("Archive transformation")
         with open(self._archive_file, mode="rb") as f:
-            iterations = int(Path(self._archive_file).stat().st_size / self._chunk_size)
+            iterations = math.ceil(
+                Path(self._archive_file).stat().st_size / self._chunk_size
+            )
             task_transform_archive = self._add_progress_task(
                 bar_text="Chunking", total_iterations=iterations
             )
@@ -95,6 +97,9 @@ class Transformer(Processor):
                     progress_task=task_transform_archive, advance=1
                 )
                 chunk = f.read(self._chunk_size)
+
+            self._debug("Removing temporary files")
+            os.remove(self._archive_file)
 
     def _transform_chunk(self, chunk_data: bytes) -> str:
         """Transforms a data chunk into an image

@@ -1,4 +1,4 @@
-# archive-to-images
+# Archive-To-Images
 
 <div align="center">
 
@@ -13,45 +13,97 @@
 [![License](https://img.shields.io/github/license/Peco602/archive-to-images)](https://github.com/Peco602/archive-to-images/blob/main/LICENSE)
 ![Coverage Report](https://raw.githubusercontent.com/Peco602/archive-to-images/dev/assets/images/coverage.svg)
 
-`archive-to-images` is a Python CLI to transform archives into images and reverse.
+**Archive-To-Images** is a Python CLI to transform archives into images and reverse.
 
 </div>
+
+
+## Intro
+
+Since some cloud providers offer free unlimited picture-only storage, the **Archive-To-Images** library allows to convert any collection of files into pictures to be uploaded without any additional cost. 
 
 
 ## Installation
 
 The package can be easily installed via `pip` package manager:
 
-```
-pip install archive-to-images
-```
-
-
-## Usage
-
-1. Create an image collection `ARCHIVE_ALICE` from multiple paths.
-
-```
-archive-to-images transform --path /home/alice/Desktop --path /home/alice/Documents --name ARCHIVE_ALICE
+```bash
+$ pip install archive-to-images
 ```
 
-You can create additional image collections from other paths. 
+## Usage as CLI
 
+### Transform to images
+
+```bash
+$ archive-to-images transform --help
+
+ Usage: archive-to-images transform [OPTIONS]                                                                           
+                                                                                                                        
+ Transforms an archive into multiple images.                                                                            
+                                                                                                                        
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  --path     -p      TEXT            Path containing data to be archived. [default: None] [required]                │
+│ *  --name     -n      TEXT            Name of the archive. [default: None] [required]                                │
+│    --size     -s      [0.5|1|2|5|10]  Maximum size of an image in MB. [default: 1]                                   │
+│    --encrypt  -e                      Protect archive with password.                                                 │
+│    --verbose  -v                      Enable verbose output.                                                         │
+│    --help                             Show this message and exit.                                                    │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
-archive-to-images transform --path /home/bob/Downloads --name ARCHIVE_BOB -s 5 -e
+
+Create an image collection from data contained in multiple paths.
+
+```bash
+$ archive-to-images transform --path /home/alice/Desktop --path /home/alice/Documents --name ARCHIVE_ALICE
 ```
 
-The maximum image size can be set via the `-s` parameter. The archived data can be optionally protected via password by adding the `-e` parameter. The password must be provided via prompt.
+Set the maximum image size in MB (default: 1):
 
-2. Upload the pictures to your favorite photo cloud storage to store them safely.
-
-3. Download all the images when you need to restore your archive.
-
-```
-archive-to-images restore --path /home/alice/Downloads/
+```bash
+$ archive-to-images transform --path /home/alice/Desktop --path /home/alice/Documents --name ARCHIVE_ALICE -s 5
 ```
 
-4. The archives will appear as `zip` files. In case of encryption the archive can be extracted via [7-Zip](https://www.7-zip.org/download.html).
+Encrypt data with a password:
+
+```bash
+$ archive-to-images transform --path /home/alice/Desktop --path /home/alice/Documents --name ARCHIVE_ALICE -s 5 -e
+```
+
+### Restore from images
+
+```bash
+$ archive-to-images restore --help
+
+ Usage: archive-to-images restore [OPTIONS]                                                                             
+                                                                                                                        
+ Restores an archive from multiple images.                                                                              
+                                                                                                                        
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  --path     -p      TEXT  Path containing images to be processed. [default: None] [required]                       │
+│    --verbose  -v            Enable verbose output.                                                                   │
+│    --help                   Show this message and exit.                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+```
+
+Restore the archives stored in image collections:
+
+```bash
+$ archive-to-images restore --path /home/alice/Downloads/Album1 --path /home/alice/Downloads/Album2
+```
+
+The library will automatically find all the archives stored in the images and will output a `zip` archive for each one.
+
+
+## Usage as docker
+
+Run the docker image and bind the current folder to the `workspace` path inside the container:
+
+```bash
+$ docker run -it --rm -v $(pwd):/workspace peco602/archive_to_images:latest bash
+```
+
+then it is possible to use the CLI directly from the container bash.
 
 
 ## Buy me a coffee
@@ -61,6 +113,8 @@ Do you like my work or did you find it useful?
 <a href="https://www.buymeacoffee.com/peco602" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 
-## Credits
+## License
 
-`archive-to-images` is a Python CLI created with https://github.com/TezRomacH/python-package-template.
+Copyright (c) 2022-present [Giovanni Pecoraro](https://github.com/Peco602)
+
+Licensed under [MIT License](https://github.com/Peco602/archive-to-images/blob/main/LICENSE)
