@@ -47,7 +47,7 @@ black = {version = "^22.10.0", allow-prereleases = true}
 isort = {extras = ["colors"], version = "^5.10.1"}
 mypy = "^0.982"
 pre-commit = "^2.20.0"
-pydocstyle = "^6.1.1"
+pydocstyle = "^6.3.0"
 pylint = "^2.15.5"
 pytest = "^7.2.0"
 pyupgrade = "^3.2.0"
