@@ -43,7 +43,7 @@ pyzipper = "0.3.6"
 [tool.poetry.group.dev.dependencies]
 bandit = "^1.7.4"
 darglint = "^1.8.1"
-black = {version = "^22.10.0", allow-prereleases = true}
+black = {version = "^23.1.0", allow-prereleases = true}
 isort = {extras = ["colors"], version = "^5.10.1"}
 mypy = "^0.982"
 pre-commit = "^2.20.0"
