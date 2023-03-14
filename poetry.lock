@@ -920,18 +920,6 @@ pyyaml = ">=5.1"
 virtualenv = ">=20.10.0"
 
 [[package]]
-name = "py"
-version = "1.11.0"
-description = "library with cross-python path, ini-parsing, io, code, log facilities"
-category = "dev"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-files = [
-    {file = "py-1.11.0-py2.py3-none-any.whl", hash = "sha256:607c53218732647dff4acdfcd50cb62615cedf612e72d1724fb1a0cc6405b378"},
-    {file = "py-1.11.0.tar.gz", hash = "sha256:51c75c4126074b472f746a24399ad32f6053d1b34b68d2fa41e558e6f4a98719"},
-]
-
-[[package]]
 name = "pycryptodomex"
 version = "3.17"
 description = "Cryptographic library for Python"
@@ -1091,38 +1079,6 @@ pytest = ">=4.6"
 
 [package.extras]
 testing = ["fields", "hunter", "process-tests", "pytest-xdist", "six", "virtualenv"]
-
-[[package]]
-name = "pytest-html"
-version = "3.2.0"
-description = "pytest plugin for generating HTML reports"
-category = "dev"
-optional = false
-python-versions = ">=3.6"
-files = [
-    {file = "pytest-html-3.2.0.tar.gz", hash = "sha256:c4e2f4bb0bffc437f51ad2174a8a3e71df81bbc2f6894604e604af18fbe687c3"},
-    {file = "pytest_html-3.2.0-py3-none-any.whl", hash = "sha256:868c08564a68d8b2c26866f1e33178419bb35b1e127c33784a28622eb827f3f3"},
-]
-
-[package.dependencies]
-py = ">=1.8.2"
-pytest = ">=5.0,<6.0.0 || >6.0.0"
-pytest-metadata = "*"
-
-[[package]]
-name = "pytest-metadata"
-version = "2.0.4"
-description = "pytest plugin for test session metadata"
-category = "dev"
-optional = false
-python-versions = ">=3.7,<4.0"
-files = [
-    {file = "pytest_metadata-2.0.4-py3-none-any.whl", hash = "sha256:acb739f89fabb3d798c099e9e0c035003062367a441910aaaf2281bc1972ee14"},
-    {file = "pytest_metadata-2.0.4.tar.gz", hash = "sha256:fcc653f65fe3035b478820b5284fbf0f52803622ee3f60a2faed7a7d3ba1f41e"},
-]
-
-[package.dependencies]
-pytest = ">=3.0.0,<8.0.0"
 
 [[package]]
 name = "pyupgrade"
@@ -1616,4 +1572,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "258a84da4138caeea5b17b48a8beebcb9ab35b982bdd3ce6cd5f5ab8d96db288"
+content-hash = "bdba52f1bed6637896cd09926046089e887eb67bfe48773c0b2dad242a663f6b"
