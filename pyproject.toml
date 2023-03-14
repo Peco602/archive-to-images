@@ -35,24 +35,24 @@ classifiers = [  #! Update me
 [tool.poetry.dependencies]
 python = "^3.8"
 importlib_metadata = {version = "^4.5.0", python = "<3.8"}
-typer = {extras = ["all"], version = "^0.6.1"}
+typer = {extras = ["all"], version = "^0.7.0"}
 rich = "^12.6.0"
 Pillow = "9.3.0"
 pyzipper = "0.3.6"
 
 [tool.poetry.group.dev.dependencies]
-bandit = "^1.7.4"
+bandit = "^1.7.5"
 darglint = "^1.8.1"
-black = {version = "^22.10.0", allow-prereleases = true}
-isort = {extras = ["colors"], version = "^5.10.1"}
-mypy = "^0.982"
-pre-commit = "^2.20.0"
-pydocstyle = "^6.1.1"
-pylint = "^2.15.5"
-pytest = "^7.2.0"
-pyupgrade = "^3.2.0"
-safety = "^2.3.1"
-coverage = "^6.5.0"
+black = {version = "^23.1.0", allow-prereleases = true}
+isort = {extras = ["colors"], version = "^5.12.0"}
+mypy = "^1.1.1"
+pre-commit = "^3.1.1"
+pydocstyle = "^6.3.0"
+pylint = "^2.17.0"
+pytest = "^7.2.2"
+pyupgrade = "^3.3.1"
+safety = "^2.3.5"
+coverage = "^7.2.1"
 coverage-badge = "^1.1.0"
 pytest-html = "^3.2.0"
 pytest-cov = "^4.0.0"
