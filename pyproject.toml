@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "archive-to-images"
-version = "0.1.2"
+version = "1.0.0"
 description = "Archive-To-Images is a Python CLI to transform archives into images and reverse."
 readme = "README.md"
 authors = ["Giovanni Pecoraro <giovanni1.pecoraro@protonmail.com>"]
