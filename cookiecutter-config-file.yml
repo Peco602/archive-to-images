@@ -1,0 +1,13 @@
+# This file contains values from Cookiecutter
+
+default_context:
+  project_name: "archive-to-images"
+  project_description: "Archive-To-Images is a Python CLI to transform archives into images and reverse."
+  organization: "Giovanni Pecoraro"
+  license: "MIT"
+  minimal_python_version: 3.8
+  github_name: "Peco602"
+  email: "giovanni1.pecoraro@protonmail.com"
+  version: "0.1.0"
+  line_length: "88"
+  create_example_template: "cli"
