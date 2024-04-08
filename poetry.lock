@@ -1169,13 +1169,13 @@ toml = ["tomli (>=1.2.3)"]
 
 [[package]]
 name = "pyfakefs"
-version = "5.3.4"
+version = "5.4.0"
 description = "pyfakefs implements a fake file system that mocks the Python file system modules."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pyfakefs-5.3.4-py3-none-any.whl", hash = "sha256:fc375229f5417f197f0892a7d6dc49a411e67e10eb8142b19d80e60a9d52a13d"},
-    {file = "pyfakefs-5.3.4.tar.gz", hash = "sha256:dadac1653195a4bfe4c26e9dfa7cc0c0286b1cd8e18706442c2464cae5542a17"},
+    {file = "pyfakefs-5.4.0-py3-none-any.whl", hash = "sha256:96e52554621a3af7b8171f8660debb65781bcd0cb0bdddea8b12e1b7871c33f3"},
+    {file = "pyfakefs-5.4.0.tar.gz", hash = "sha256:969096d84b5b986f4f84399d03f4900381a3880d03adcdbd609566a4baf39bf9"},
 ]
 
 [[package]]
@@ -1672,4 +1672,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "0a80b0798d53a3fd70ad3986355490b1c03a7266da21bdf2de20a50a24cbf835"
+content-hash = "e280f80fce261b365f82b0af118610dd95d185974db3d2607b8b56baf40950a7"
